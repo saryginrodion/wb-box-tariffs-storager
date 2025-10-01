@@ -1,5 +1,6 @@
 import { migrate, seed } from "#postgres/knex.js";
 import { newLogger } from "#utils/logging.js";
+import "#schedule/schedule.js";
 
 const logger = newLogger({
     from: "app.ts"

@@ -22,12 +22,19 @@ export class WbApi {
 
         axiosRetry(this.#axios, {
             retries: 3,
-            retryDelay: axiosRetry.exponentialDelay,
+            retryDelay: () => 3000.0,
+            retryCondition: async (error) => {
+                if (error.status == 401) {
+                    logger.error("401 Authorization failed")
+                    return false;
+                }
+                return true;
+            },
             onRetry: (retryCount, error, requestConfig) => {
                 logger.child({
                     url: requestConfig.url,
-                    error,
-                    retryCount
+                    error: error.message,
+                    retryCount,
                 }).warn("Retrying WBAPI call...");
             }
         })
