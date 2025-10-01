@@ -17,7 +17,7 @@ export class BoxTariffsDB implements IBoxTariffsDB {
                 date,
                 ...tariff
             })))
-            .onConflict()
+            .onConflict(["warehouseName", "date"])
             .merge();
     }
 
