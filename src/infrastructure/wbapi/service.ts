@@ -1,15 +1,16 @@
 import { AxiosInstance } from "axios"
 import { ResponseWrapper } from "./schemas.js"
-import { BoxTarrifs } from "#core/types/tariffs_box.js"
-import { toWbApiDateFormat } from "./utils.js"
+import { BoxTarrifs } from "#core/types/box_tariffs.js"
 import axiosRetry from "axios-retry"
 import { newLogger } from "#utils/logging.js"
+import { IWbApi } from "#core/interfaces/wbapi.js"
+import { toWbApiDateFormat } from "#utils/date.js"
 
 const logger = newLogger({
     from: "wbapi/service.ts",
 })
 
-export class WbApi {
+export class WbApi implements IWbApi {
     #axios: AxiosInstance
     #commonApiBase: string = "https://common-api.wildberries.ru/api/v1/"
 
@@ -40,7 +41,7 @@ export class WbApi {
         })
     }
 
-    async tariffsBox(date: Date): Promise<BoxTarrifs | undefined> {
+    async boxTariffs(date: Date): Promise<BoxTarrifs> {
         const response = await this.#axios.get<ResponseWrapper<BoxTarrifs>>(
             this.#commonApiBase + "tariffs/box",
             {

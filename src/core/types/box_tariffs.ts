@@ -1,4 +1,4 @@
-export interface WarehouseTariff {
+export interface BoxTariff {
     boxDeliveryBase: number,
     boxDeliveryCoefExpr: number,
     boxDeliveryLiter: number,
@@ -15,5 +15,5 @@ export interface WarehouseTariff {
 export interface BoxTarrifs {
     dtNextBox: string,
     dtTillMax: string,
-    warehouseList: Array<WarehouseTariff>,
+    warehouseList: Array<BoxTariff>,
 }
