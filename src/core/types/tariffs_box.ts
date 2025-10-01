@@ -1,4 +1,4 @@
-export interface TariffsBox {
+export interface WarehouseTariff {
     boxDeliveryBase: number,
     boxDeliveryCoefExpr: number,
     boxDeliveryLiter: number,
@@ -10,4 +10,10 @@ export interface TariffsBox {
     boxStorageLiter: number,
     geoName: string,
     warehouseName: string,
+}
+
+export interface BoxTarrifs {
+    dtNextBox: string,
+    dtTillMax: string,
+    warehouseList: Array<WarehouseTariff>,
 }

@@ -1,13 +1,7 @@
-import { TariffsBox } from "#core/types/tariffs_box.js"
+import { BoxTarrifs } from "#core/types/tariffs_box.js"
 
 export type ResponseWrapper<T> = {
     response: {
-        data: T,
+        data: BoxTarrifs,
     }
-}
-
-export type TariffsBoxData = {
-    dtNextBox: string,
-    dtTillMax: string,
-    warehouseList: Array<TariffsBox>,
 }
