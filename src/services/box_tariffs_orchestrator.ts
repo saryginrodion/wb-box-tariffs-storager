@@ -1,7 +1,6 @@
 import { IBoxTariffsDB } from "#core/interfaces/box_tariffs_db.js";
 import { IBoxTariffsSheet } from "#core/interfaces/box_tariffs_sheet.js";
 import { IWbApi } from "#core/interfaces/wbapi.js";
-import { toWbApiDateFormat } from "#utils/date.js";
 
 export class BoxTariffsOrchestrator {
     #wbapi: IWbApi
@@ -15,7 +14,7 @@ export class BoxTariffsOrchestrator {
     }
 
     async updateBoxTariffs(): Promise<void> {
-        const date = toWbApiDateFormat(new Date());
+        const date = new Date();
 
         const boxTariffs = await this.#wbapi.boxTariffs(date);
 

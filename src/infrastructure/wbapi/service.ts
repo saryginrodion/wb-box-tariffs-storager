@@ -41,12 +41,12 @@ export class WbApi implements IWbApi {
         })
     }
 
-    async boxTariffs(date: string): Promise<BoxTarrifs> {
+    async boxTariffs(date: Date): Promise<BoxTarrifs> {
         const response = await this.#axios.get<ResponseWrapper<BoxTarrifs>>(
             this.#commonApiBase + "tariffs/box",
             {
                 params: {
-                    date: date,
+                    date: toWbApiDateFormat(date),
                 },
             },
         );
