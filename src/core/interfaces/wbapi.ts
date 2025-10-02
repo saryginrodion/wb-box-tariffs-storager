@@ -1,5 +1,5 @@
-import { BoxTarrifs } from "#core/types/box_tariffs.js";
+import { BoxTariffs } from "#core/types/box_tariffs.js";
 
 export interface IWbApi {
-    boxTariffs(date: Date): Promise<BoxTarrifs>,
+    boxTariffs(date: Date): Promise<BoxTariffs>,
 }

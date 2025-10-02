@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios"
-import { ResponseWrapper } from "./schemas.js"
-import { BoxTarrifs } from "#core/types/box_tariffs.js"
+import { BoxTariffsValidationSchema, ResponseWrapper } from "./schemas.js"
+import { BoxTariffs } from "#core/types/box_tariffs.js"
 import axiosRetry from "axios-retry"
 import { newLogger } from "#utils/logging.js"
 import { IWbApi } from "#core/interfaces/wbapi.js"
@@ -16,6 +16,7 @@ export class WbApi implements IWbApi {
 
     constructor(token: string, axiosInstance: AxiosInstance) {
         this.#axios = axiosInstance.create({
+            timeout: 5000,
             headers: {
                 "Authorization": token
             },
@@ -41,8 +42,8 @@ export class WbApi implements IWbApi {
         })
     }
 
-    async boxTariffs(date: Date): Promise<BoxTarrifs> {
-        const response = await this.#axios.get<ResponseWrapper<BoxTarrifs>>(
+    async boxTariffs(date: Date): Promise<BoxTariffs> {
+        const response = await this.#axios.get<ResponseWrapper<BoxTariffs>>(
             this.#commonApiBase + "tariffs/box",
             {
                 params: {
@@ -51,6 +52,6 @@ export class WbApi implements IWbApi {
             },
         );
 
-        return response.data.response.data;
+        return BoxTariffsValidationSchema.parse(response.data.response.data);
     }
 }
