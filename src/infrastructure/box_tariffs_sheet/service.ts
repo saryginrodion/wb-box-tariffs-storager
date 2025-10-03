@@ -20,6 +20,8 @@ export class BoxTariffsSheet implements IBoxTariffsSheet {
     }
 
     async updateSheet(date: Date, tariffs: Array<BoxTariff>): Promise<void> {
+        await this.clearSheet();
+
         // Headings
         const rows = [[
             "Дата",
@@ -37,7 +39,7 @@ export class BoxTariffsSheet implements IBoxTariffsSheet {
         ]];
 
         await this.writeRows(0, 0, rows);
-        
+
         const tariffRows = tariffs.sort((a, b) => {
             // Сортировка только по коэф. экспресс доставки
             return (a.boxDeliveryCoefExpr || 0) - (b.boxDeliveryCoefExpr || 0);
@@ -59,6 +61,14 @@ export class BoxTariffsSheet implements IBoxTariffsSheet {
         await this.writeRows(0, 1, tariffRows);
     }
 
+    async clearSheet() {
+        await this.#sheets.spreadsheets.values.clear({
+            spreadsheetId: this.#spreadsheetId,
+            range: this.#sheetName,
+        });
+        logger.debug("Cleared sheet");
+    }
+
     async writeRows(fromCol: number, fromRow: number, rows: Array<Array<string | number | null | undefined>>) {
         const rowsWidth = Math.max(...rows.map((row, _) => row.length))
         const colsLength = rows.length;
@@ -67,7 +77,6 @@ export class BoxTariffsSheet implements IBoxTariffsSheet {
         const toCol = fromCol + rowsWidth - 1;
 
         const range = indexesToSpreadsheetRange(this.#sheetName, fromCol, fromRow, toCol, toRow);
-        logger.debug("Writing range " + range);
 
         await this.#sheets.spreadsheets.values.update({
             spreadsheetId: this.#spreadsheetId,
@@ -76,6 +85,8 @@ export class BoxTariffsSheet implements IBoxTariffsSheet {
             requestBody: {
                 values: rows,
             }
-        })
+        });
+
+        logger.debug("Wrote range: " + range);
     }
 }
