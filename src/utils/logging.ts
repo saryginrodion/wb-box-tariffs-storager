@@ -7,6 +7,12 @@ export type LoggerInfo = {
 
 export const newLogger = (loggerInfo: LoggerInfo): pino.Logger => {
     return pino({
+        transport: {
+            target: 'pino-pretty',
+            options: {
+                colorize: true,
+            },
+        },
         level: env.NODE_ENV != "production" ? "debug" : "info",
     }).child(loggerInfo)
 }
