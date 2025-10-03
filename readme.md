@@ -10,3 +10,15 @@
 ```sh
 docker compose up --build
 ```
+
+## Для разработки
+Запуск базы данных:
+```sh
+docker compose up postgres
+```
+
+Запуск самого проекта:
+```sh
+npm install # Установка зависимостей, выполнять при первом запуске
+npm run dev
+```
