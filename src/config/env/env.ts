@@ -13,6 +13,7 @@ const envSchema = z.object({
     POSTGRES_USER: z.string(),
     POSTGRES_PASSWORD: z.string(),
     WB_API_TOKEN: z.string(),
+    SPREADSHEET_ID: z.string(),
     APP_PORT: z.union([
         z.undefined(),
         z
@@ -30,6 +31,7 @@ const env = envSchema.parse({
     POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
     NODE_ENV: process.env.NODE_ENV,
     WB_API_TOKEN: process.env.WB_API_TOKEN,
+    SPREADSHEET_ID: process.env.SPREADSHEET_ID,
     APP_PORT: process.env.APP_PORT,
 });
 

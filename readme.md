@@ -18,6 +18,13 @@
 - src/config/env/env.ts
 - src/config/knex/knexfile.ts
 
+## Подготовка перед запуском проекта
+### .env
+Убедитесь, что файл `.env` создан, и он заполнен по примеру из `example.env`
+
+### Google Credentials
+Для работы с таблицами нужно добавить файл с данными сервис аккаунта из Google Cloud Console, переименовать его в `google_credentials.json` - этот файл добавлен в .gitignore
+
 ## Команды:
 
 Запуск базы данных:
