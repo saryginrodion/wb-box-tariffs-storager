@@ -1,4 +1,5 @@
 import env from "#config/env/env.js"
+import { sheets } from "#config/google/google.js"
 import { BoxTariffsDB } from "#infrastructure/box_tariffs_db/service.js"
 import { BoxTariffsSheet } from "#infrastructure/box_tariffs_sheet/service.js"
 import { WbApi } from "#infrastructure/wbapi/service.js"
@@ -17,7 +18,7 @@ const boxTariffsOrchestrator = new BoxTariffsOrchestrator(
         axios.create(),
     ),
     new BoxTariffsDB(knex),
-    new BoxTariffsSheet(),
+    new BoxTariffsSheet(await sheets(), env.SPREADSHEET_ID),
 );
 
 export const updateTariffsBox = async () => {
